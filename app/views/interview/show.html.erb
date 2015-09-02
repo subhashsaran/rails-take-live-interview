@@ -1,0 +1,103 @@
+<div class="container">
+  <form method="post" action="/apply/apply_interview" name="cd" id="form_show">
+    <input id="txt" readonly="true" type="text" value="<%= @interview.time_test %>" border="0" name="disp">
+    <input name="interview[id]" value="<%= @interview.id %>" style="display: none"/> 
+    <p style="font-size: 24px;color: #0077B3"><%= @interview.title%></p>
+    <p style="font-size: 15px;">Start Date:<%= @interview.start_date.strftime("%m/%d/%Y")%></p>
+    <p style="font-size: 15px;">Due Date:<%= @interview.due_date.strftime("%m/%d/%Y")%></p>
+    <p style="font-size: 15px;">Time Test:<%= @interview.time_test%></p>
+    <% @questions.each_with_index do |question,index_qt|%>
+      <p style="font-size: 15px;color: #0077B3;margin-top: 20px;">Câu <%= index_qt +1%>:<%= question.content%></p>
+      <div class="list_answers_show">
+        <% question.answers.each do |answer|%>
+          <input type="checkbox" name="interview[answer][<%= index_qt +1%>][is_correct]" class="checkbox" value="<%= answer.id%>"/> <%= answer.content%><br />
+        <% end %>
+      </div>  
+    <% end %>
+    <input type="submit" value="submit" class="btn btn-primary" id="submit_test"style="margin-top: 50px"/>  
+    <input type="submit" value="Cancel" class="btn" id="cancel_test"style="margin-top: 50px"/>  
+  </form> 
+</div>
+<style type="text/css">
+  #txt {
+    border:none;
+    font-family:verdana;
+    font-size:16pt;
+    font-weight:bold;
+    border-right-color:#FFFFFF
+  }
+</style>
+<script>
+   jQuery(function() {
+     $(".checkbox").live("click",function(){
+       $(this).parent().find(".checkbox").removeAttr('checked');
+       $(this).attr( 'checked','checked');
+     });
+   });
+</script>   
+<script language="javascript">
+  var mins
+  var secs;
+  function cd() {
+    var time = $("#txt").attr("value")
+    mins = 1 * m(time); // change minutes here
+    secs = 0 + s(":01"); // change seconds here (always add an additional second to your total)
+    redo();
+  }
+  
+  function m(obj) {
+    for(var i = 0; i < obj.length; i++) {
+        if(obj.substring(i, i + 1) == ":")
+        break;
+    }
+    return(obj.substring(0, i));
+  }
+  
+  function s(obj) {
+    for(var i = 0; i < obj.length; i++) {
+        if(obj.substring(i, i + 1) == ":")
+        break;
+    }
+    return(obj.substring(i + 1, obj.length));
+  }
+  
+  function dis(mins,secs) {
+    var disp;
+    if(mins <= 9) {
+        disp = " 0";
+    } else {
+        disp = " ";
+    }
+    disp += mins + ".";
+    if(secs <= 9) {
+        disp += "0" + secs;
+    } else {
+        disp += secs;
+    }
+    return(disp);
+  }
+  
+  function redo() {
+    secs--;
+    if(secs == -1) {
+        secs = 59;
+        mins--;
+    }
+    document.cd.disp.value = dis(mins,secs); // setup additional displays here.
+    if((mins == 0) && (secs == 0)) {
+        window.alert("Time is up. Press OK to finish."); // change timeout message as required
+        $("#submit_test").click();
+    } else {
+      cd = setTimeout("redo()",1000);
+    }
+  }
+  
+  function init() {
+    cd();
+  }
+  window.onload = init;
+  
+</script>
+
+
+

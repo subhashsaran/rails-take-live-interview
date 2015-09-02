@@ -1,0 +1,22 @@
+<div class="div_question" question_max_number="1">
+  <div class="question">
+    <p>No.<span class="no_number">1:</span> <a href="#" class="remove_question">remove question</a></p>
+    <p>Question</p>
+    <input type="text" name="interview[questions][1][content]" class="question_content" placeholder="question content..."/>
+    <p>Question type</p>
+    <select name="interview[questions][1][question_type]" class="btn">
+      <option value="multil">Multil Choice </option>
+      <option value="exact">Exact answer </option>
+      <option value="open">Open answer </option>
+    </select>
+    <p>Choice answers</p>
+    <div class="list_answers">
+      <div class="answers">
+        <p>Answer No.<span class="no_answer">1</span>:<a class="remove_answer">Remove choice</a></p>
+        <input type="text" placeholder="Choice content..." name="interview[questions][1][answers][1][content]" /> <input type="checkbox" name="interview[questions][1][answers][1][is_correct]"/> Is correct
+      </div>
+    </div>
+    <a class="add_answer" answer_max_number="1" question_number="1" >Add answer</a>
+    <br /><br />
+  </div>  
+</div>

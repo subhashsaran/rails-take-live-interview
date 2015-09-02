@@ -1,0 +1,31 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+ */
+
+.header {
+  position: relative;
+  padding: 20px 0 5px 0;
+  text-align: left;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 0 30px rgba(0, 0, 0, .075);
+}
+
+.footer {
+  padding: 10px 0 50px 0;
+  margin-top: 100px;
+  border-top: 1px solid #E5E5E5;
+  background-color: whiteSmoke;
+}
+
+#error_explanation {
+  color: red;
+}

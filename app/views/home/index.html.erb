@@ -1,0 +1,53 @@
+<h1 style="font-size: 23px;line-height: 20px">Wellcome to <span style="color: red">One</span>Check</h1>
+<p style="line-height: 10px;margin-bottom: 50px;">This is the homepage of the website with test information.</p>
+<h4>In-progress interviews</h3>
+<%= render :partial => "body_inprogress_interviews" , :locals => { :inprogress_interview => @inprogress_interview}%>
+<br />
+<br />
+<h4>Next interviews</h4>
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Time of test</th>
+      <th>Start date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @next_interview.empty? %>
+        <tr class="info">
+          <td colspan="5">No data to show</td>
+        </tr>
+    <% else %>
+      <% @next_interview.each do |interview|%>
+        <%= render :partial => "next_interview" , :locals => { :interview => interview}%>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<style>
+  .apply_interview:hover{
+    text-decoration: underline
+  }
+</style>
+<script>
+   jQuery(function() {
+     $(".delete_interview").live("click",function(){
+        if (confirm('Are you sure ?')) {
+          var interview_id = $(this).attr("interview_id")
+          var url_ajax = 'interview/delete'
+          $.ajax({
+            url : url_ajax,
+            type : "POST",
+            data : 'id=' + interview_id ,
+            dataType : "script",
+            success : function() {
+              }
+           });
+        }
+        return false
+     });
+   });
+</script>

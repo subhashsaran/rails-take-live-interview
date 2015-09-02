@@ -1,0 +1,32 @@
+<div class="div_question" question_max_number="<%= Question.count_questions(interview_id)%>">
+  <input type="text" id="questions_deleted" name="interview[questions_deleted]" value="" style="display:none"/>
+  <% @questions.each_with_index do |question,index_qs|%>
+    <div class="question" style="margin-top: 20px">
+      <p style="font-size: 15px;color: #0077B3;float:left;margin-right:5px">No.<span class="no_number"></span><p></p>
+      <div class="question_show">
+        <p style="float: left;margin-right:15px"><%= question.content%></p>
+        <a href="#" class="edit_question" value="<%= question.id%>" style="color: #0077B3;">Edit /</a>
+        <a href="#" class="delete_question" value="<%= question.id%>" style="color: #0077B3">Delete</a><br /><br />
+        <% question.answers.each do |answer|%>
+          <input type="checkbox" name="check_answer"/> <%= answer.content%><br />
+        <% end %>
+      </div>
+      <div class="question_edit" style="display: none">
+        <input type="text" name="interview[questions][<%= index_qs + 1 %>][id]" value="<%= question.id%>" style="display:none"/>
+        <input type="text" name="interview[questions][<%= index_qs + 1 %>][content]" class="question_content" value="<%= question.content%>"/>
+        <div class="list_answers">
+          <% question.answers.each_with_index do |answer,index_as|%>
+            <div class="answers">
+              <input type="text" value="<%= answer.id %>" name="interview[questions][<%= index_qs + 1 %>][answers][<%= index_as + 1 %>][id]" style="display:none"/>
+              <p>Answer No.<span class="no_answer"></span>:<a class="remove_answer" value="<%= answer.id %>">Remove choice</a></p>
+              <input type="text" value="<%= answer.content %>" name="interview[questions][<%= index_qs + 1 %>][answers][<%= index_as + 1 %>][content]" /> 
+              <input type="checkbox" name="interview[questions][<%= index_qs + 1 %>][answers][<%= index_as + 1 %>][is_correct]" <% if answer.is_correct %><%= checked="checked" %><% end %>/> Is correct
+            </div>
+          <% end %> 
+        </div>
+        <a class="add_answer" answer_max_number="<%= Answer.count_answers(question.id)%>" question_number="<%= index_qs + 1 %>" >Add answer</a>
+        <br /><br />
+      </div>  
+    </div><br />
+  <% end %>
+</div><br />

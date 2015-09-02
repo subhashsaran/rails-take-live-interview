@@ -1,0 +1,55 @@
+<h3>My interviews</h3>
+<h4>My applied interviews</h4>
+<table class="table table-bordered table-striped table-hover">
+   <thead>
+    <tr>
+      <th>No.</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Applied At</th>
+      <th>Time of test</th>
+      <th>Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if  @my_applied_interviews.empty? %>
+      <tr class="info">
+        <td colspan="6">No data to show</td>
+      </tr>
+    <% else %>
+      <% @my_applied_interviews.each do |my_interview|%>
+        <tr>
+          <td><%= my_interview.id %></td>
+          <td><%= my_interview.interview.title %></td>
+          <td><%= my_interview.user.email%></td>
+          <td><%= my_interview.created_at.to_date%></td>
+          <td><%= my_interview.time_test%></td>
+          <td>Succes/<%= link_to "Edit",:controller => "interview", :action => "show", :id => my_interview.interview.id%></td>
+        </tr>
+      <% end %>  
+    <% end %>  
+  </tbody>
+</table>
+<br />
+<h4>My own interviews</h4>
+<%= render :partial => "my_own_interviews" , :locals => {:my_own_interviews => @my_own_interviews}%>
+
+<script>
+   jQuery(function() {
+     $(".close_interview").live("click",function(){
+        if (confirm('Are you sure ?')) {
+          var interview_id = $(this).attr("interview_id")
+          var url_ajax = 'close'
+          $.ajax({
+            url : url_ajax,
+            type : "POST",
+            data : 'id=' + interview_id ,
+            dataType : "script",
+            success : function() {
+              }
+          });
+        }
+        return false
+     });
+   });
+</script>
